@@ -4,5 +4,6 @@ export default EStyleSheet.create({
     smallText: {
         color: '$white',
         fontSize: 12,
+        alignSelf: 'center',
     }
 });
