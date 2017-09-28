@@ -6,6 +6,7 @@ import {InputWithButton} from '../components/TextInput';
 import {ClearButton} from '../components/Button';
 import {LastConverted} from '../components/Text';
 import {Header} from '../components/Header';
+import PropTypes from 'prop-types';
 
 const TEMP_BASE_CURRENCY = 'USD';
 const TEMP_QUOTE_CURRENCY = 'GBP';
@@ -18,11 +19,11 @@ const TEMP_CONVERSION_DATE = new Date();
 class Home extends React.Component {
 
     handlePressBaseCurrency = () => {
-        console.log(1);
+        this.props.navigation.navigate('CurrencyList', {title: 'Base Currency'});
     };
 
     handlePressQuoteCurrency = () => {
-        console.log(2);
+        this.props.navigation.navigate('CurrencyList', {title: 'Quote Currency'});
     };
 
     handleChangeText = (text) => {
@@ -30,7 +31,7 @@ class Home extends React.Component {
     };
 
     handleOptionPress = () => {
-        console.log('handle option press');
+        this.props.navigation.navigate('Options');
     };
 
     render() {
@@ -64,5 +65,9 @@ class Home extends React.Component {
         );
     }
 }
+
+Home.PropTypes = {
+    navigation: PropTypes.object
+};
 
 export default Home;

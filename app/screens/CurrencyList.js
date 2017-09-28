@@ -2,12 +2,13 @@ import React from 'react';
 import {FlatList, StatusBar, View} from 'react-native';
 import currency from '../data/currency';
 import {ListItem, Separator} from '../components/List';
+import PropsTypes from 'prop-types';
 
 const TEMP_CURRENT_CURRENCY = 'CAD';
 
 class CurrencyList extends React.Component {
     handlePress = () => {
-        console.log('handle press');
+        this.props.navigation.navigate('Home');
     };
 
     render() {
@@ -28,5 +29,9 @@ class CurrencyList extends React.Component {
         );
     }
 }
+
+CurrencyList.PropTypes = {
+    navigation: PropsTypes.object,
+};
 
 export default CurrencyList;

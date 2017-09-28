@@ -1,6 +1,7 @@
 import React from 'react';
 import {ScrollView, StatusBar} from 'react-native';
 import EStyleSheet from 'react-native-extended-stylesheet';
+import PropTypes from 'prop-types';
 
 import {ListItem, Separator} from '../components/List';
 
@@ -13,7 +14,7 @@ const styles = EStyleSheet.create({
 
 class Themes extends React.Component {
     handlePressTheme = (color) => {
-        console.log(color);
+        this.props.navigation.goBack();
     };
 
     render() {
@@ -36,7 +37,7 @@ class Themes extends React.Component {
                     iconBackground={styles.$green}
                     selected
                     checkmark={false}
-                    text="Green" onPress={() =>this.handlePressTheme(styles.$green)}/>
+                    text="Green" onPress={() => this.handlePressTheme(styles.$green)}/>
                 <Separator/>
                 <ListItem
                     iconBackground={styles.$purple}
@@ -48,5 +49,9 @@ class Themes extends React.Component {
         )
     }
 }
+
+Themes.PropTypes = {
+    navigation: PropTypes.object,
+};
 
 export default Themes;
