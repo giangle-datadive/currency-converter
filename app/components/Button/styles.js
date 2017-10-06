@@ -5,6 +5,7 @@ export default EStyleSheet.create({
         alignItems: 'center',
     },
     wrapper: {
+        marginTop: 10,
         flexDirection: 'row',
         alignItems: 'center'
     },

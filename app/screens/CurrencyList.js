@@ -3,12 +3,12 @@ import {FlatList, StatusBar, View} from 'react-native';
 import currency from '../data/currency';
 import {ListItem, Separator} from '../components/List';
 import PropsTypes from 'prop-types';
-
+import {NavigationActions} from 'react-navigation';
 const TEMP_CURRENT_CURRENCY = 'CAD';
 
 class CurrencyList extends React.Component {
     handlePress = () => {
-        this.props.navigation.navigate('Home');
+        this.props.navigation.dispatch(NavigationActions.back());
     };
 
     render() {
