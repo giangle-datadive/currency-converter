@@ -33,28 +33,30 @@ class Home extends React.Component {
     };
 
     render() {
-        const {baseCurrency, quoteCurrency, amount, conversionRate, isFetching, lastConvertedDate} = this.props;
+        const {baseCurrency, quoteCurrency, amount, conversionRate, isFetching, lastConvertedDate, primaryColor} = this.props;
         let quotePrice = (amount * conversionRate).toFixed(2);
         if (isFetching) {
             quotePrice = '...';
         }
 
         return (
-            <Container>
+            <Container backgroundColor={primaryColor}>
                 <StatusBar translucent={false} barStyle="light-content"/>
                 <Header onPress={this.handleOptionPress}/>
                 <KeyboardAvoidingView behavior="padding">
-                    <Logo/>
+                    <Logo tintColor={primaryColor}/>
                     <InputWithButton
                         keyboardType="numeric"
                         defaultValue={amount.toString()}
                         onPress={this.handlePressBaseCurrency}
                         onChangText={this.handleChangeText}
+                        textColor={primaryColor}
                         buttonText={baseCurrency}/>
                     <InputWithButton
                         onPress={this.handlePressQuoteCurrency}
                         buttonText={quoteCurrency}
                         value={quotePrice}
+                        textColor={primaryColor}
                         editable={false}/>
 
                     <LastConverted
@@ -86,6 +88,7 @@ const mapStateToProps = (state) => {
         baseCurrency,
         quoteCurrency,
         amount,
+        primaryColor: state.theme.primaryColor,
         conversionRate: rates[quoteCurrency] || 0,
         isFetching: conversionSelector.isFetching,
         lastConvertedDate: conversionSelector.date ? new Date(conversionSelector.date) : new Date(),

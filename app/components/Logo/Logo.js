@@ -72,7 +72,8 @@ class Logo extends React.Component {
         ];
         const imageStyle = [
             styles.image,
-            {width: this.imageWidth, height: this.imageWidth}
+            {width: this.imageWidth, height: this.imageWidth},
+            this.props.tintColor ? {tintColor: this.props.tintColor} : null
         ];
 
         return (

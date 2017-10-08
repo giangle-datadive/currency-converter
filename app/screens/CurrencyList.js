@@ -6,7 +6,6 @@ import {ListItem, Separator} from '../components/List';
 import PropsTypes from 'prop-types';
 import {NavigationActions} from 'react-navigation';
 
-const TEMP_CURRENT_CURRENCY = 'CAD';
 import {changeBaseCurrency, changeQuoteCurrency} from '../actions/currencies';
 
 class CurrencyList extends React.Component {
@@ -22,6 +21,11 @@ class CurrencyList extends React.Component {
     };
 
     render() {
+        let compareCurrency = this.props.baseCurrency;
+        if (this.props.navigation.state.params.type === 'quote') {
+            compareCurrency = this.props.quoteCurrency
+        }
+
         return (
             <View style={{flex: 1}}>
                 <StatusBar translucent={false} barStyle="default"/>
@@ -33,7 +37,8 @@ class CurrencyList extends React.Component {
                         <ListItem
                             onPress={() => this.handlePress(item)}
                             text={item}
-                            selected={TEMP_CURRENT_CURRENCY === item}/>
+                            iconBackground={this.props.primaryColor}
+                            selected={compareCurrency === item}/>
                     )}/>
             </View>
         );
@@ -42,11 +47,22 @@ class CurrencyList extends React.Component {
 
 CurrencyList.PropTypes = {
     navigation: PropsTypes.object,
+    baseCurrency: PropsTypes.string,
+    quoteCurrency: PropsTypes.string,
+    changeQuoteCurrency: PropsTypes.func,
+    changeBaseCurrency: PropsTypes.func,
+    primaryColor: PropsTypes.string,
 };
+
+const mapStateToProps = ({currencies, theme}) => ({
+    baseCurrency: currencies.baseCurrency,
+    quoteCurrency: currencies.quoteCurrency,
+    primaryColor: theme.primaryColor,
+});
 
 const mapDispatchToProps = dispatch => ({
     changeQuoteCurrency: (currency) => dispatch(changeQuoteCurrency(currency)),
     changeBaseCurrency: (currency) => dispatch(changeBaseCurrency(currency)),
 });
 
-export default connect(null, mapDispatchToProps)(CurrencyList);
+export default connect(mapStateToProps, mapDispatchToProps)(CurrencyList);
