@@ -8,9 +8,20 @@ import {LastConverted} from '../components/Text';
 import {Header} from '../components/Header';
 import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
-import {swapCurrency, changeCurrencyAmount} from '../actions/currencies';
+import {swapCurrency, changeCurrencyAmount, getInitialConversion} from '../actions/currencies';
+import {connectAlert} from '../components/Alert';
 
 class Home extends React.Component {
+
+    componentWillMount() {
+        this.props.dispatch(getInitialConversion());
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.currencyError && nextProps.currencyError !== this.props.currencyError) {
+            this.props.alertWithType('error', 'Error', nextProps.currencyError);
+        }
+    }
 
     handlePressBaseCurrency = () => {
         this.props.navigation.navigate('CurrencyList', {title: 'Base Currency', type: 'base'});
@@ -88,6 +99,7 @@ const mapStateToProps = (state) => {
         baseCurrency,
         quoteCurrency,
         amount,
+        currencyError: state.currencies.error,
         primaryColor: state.theme.primaryColor,
         conversionRate: rates[quoteCurrency] || 0,
         isFetching: conversionSelector.isFetching,
@@ -95,4 +107,4 @@ const mapStateToProps = (state) => {
     }
 };
 
-export default connect(mapStateToProps)(Home);
+export default connect(mapStateToProps)(connectAlert(Home));
